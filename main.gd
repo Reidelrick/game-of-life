@@ -1,5 +1,7 @@
 extends Node2D
 
+var generation: int = 0
+
 var world_max_size = Vector2(9, 9)
 var world_min_size = Vector2(-1, -1)
 
@@ -8,7 +10,7 @@ var world: Array = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+	[0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -111,7 +113,7 @@ func test_live_cells(y, x):
 	return adjacency_count
 	
 func generate() -> void :
-	var temp_world = world
+	var temp_world = world.duplicate(true)
 	for y in world.size():
 		for x in world[y].size():
 			
@@ -132,8 +134,10 @@ func generate() -> void :
 					print("==3")
 				elif adjacent == 1:
 					print("test")
-					
+
 	world = temp_world
+	generation += 1
+	
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		generate()
